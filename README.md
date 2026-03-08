@@ -15,6 +15,7 @@ A full-stack web application for managing a product catalog, built with **.NET 1
 | UI       | Bootstrap 5              |
 
 ---
+![Uploading image.png…]()
 
 ## Project Structure
 
@@ -127,6 +128,9 @@ The application will open at: **http://localhost:4200**
 - ✅ **Validation**
   - Frontend: Title and Price fields are mandatory.
   - Backend: Price must be greater than 0.
+<img width="1919" height="738" alt="Screenshot 2026-03-09 053450" src="https://github.com/user-attachments/assets/7a00ef9c-9810-4c44-b966-07ae414829ab" />
+<img width="1919" height="790" alt="Screenshot 2026-03-09 053502" src="https://github.com/user-attachments/assets/e56af3d0-11bc-41e0-9465-68985bed4d7c" />
+<img width="1902" height="355" alt="Screenshot 2026-03-09 053222" src="https://github.com/user-attachments/assets/801dd553-98ac-4739-a1fe-53790006995a" />
 
 ---
 
