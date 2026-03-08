@@ -1,0 +1,78 @@
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+
+            <div class="card shadow-sm">
+                <div class="card-header bg-white border-bottom py-3">
+                    <h4 class="mb-0">{{ isEditMode ? 'Edit Product' : 'Add New Product' }}</h4>
+                </div>
+                <div class="card-body">
+
+                    @if (errorMessage) {
+                    <div class="alert alert-danger">{{ errorMessage }}</div>
+                    }
+
+                    <form [formGroup]="productForm" (ngSubmit)="onSubmit()" novalidate>
+
+                        <!-- Title -->
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Title <span class="text-danger">*</span></label>
+                            <input type="text" id="title" class="form-control" formControlName="title"
+                                [class.is-invalid]="f['title'].invalid && f['title'].touched"
+                                placeholder="Enter product title" />
+                            @if (f['title'].touched && f['title'].errors?.['required']) {
+                            <div class="invalid-feedback">Title is required.</div>
+                            }
+                        </div>
+
+                        <!-- Description -->
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea id="description" class="form-control" formControlName="description" rows="3"
+                                placeholder="Enter product description (optional)"></textarea>
+                        </div>
+
+                        <!-- Price and Quantity -->
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="price" class="form-label">Price <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <span class="input-group-text">$</span>
+                                    <input type="number" id="price" step="0.01" min="0.01" class="form-control"
+                                        formControlName="price"
+                                        [class.is-invalid]="f['price'].invalid && f['price'].touched"
+                                        placeholder="0.00" />
+                                    @if (f['price'].touched) {
+                                    @if (f['price'].errors?.['required']) {
+                                    <div class="invalid-feedback">Price is required.</div>
+                                    } @else if (f['price'].errors?.['min']) {
+                                    <div class="invalid-feedback">Price must be greater than 0.</div>
+                                    }
+                                    }
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="quantity" class="form-label">Quantity</label>
+                                <input type="number" id="quantity" min="0" class="form-control"
+                                    formControlName="quantity" placeholder="0" />
+                            </div>
+                        </div>
+
+                        <!-- Actions -->
+                        <div class="d-flex justify-content-end gap-2 pt-2">
+                            <a routerLink="/" class="btn btn-outline-secondary">Cancel</a>
+                            <button type="submit" class="btn btn-primary" [disabled]="isSubmitting">
+                                @if (isSubmitting) {
+                                <span class="spinner-border spinner-border-sm me-2" role="status"></span>
+                                }
+                                {{ isEditMode ? 'Update Product' : 'Save Product' }}
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

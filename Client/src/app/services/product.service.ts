@@ -7,7 +7,7 @@ import { Product } from '../models/product.model';
     providedIn: 'root'
 })
 export class ProductService {
-    private apiUrl = 'https://localhost:5001/api/products'; // Fallback to HTTP if HTTPS fails, but WebAPI defaults to 5001 for HTTPS and 5000 for HTTP
+    private apiUrl = 'http://localhost:5286/api/products';
 
     constructor(private http: HttpClient) { }
 

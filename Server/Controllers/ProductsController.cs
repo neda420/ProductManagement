@@ -16,98 +16,74 @@ namespace Server.Controllers
             _context = context;
         }
 
-        // GET: api/products
+        // GET /api/products
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
         {
             return await _context.Products.ToListAsync();
         }
 
-        // GET: api/products/5
+        // GET /api/products/{id}
         [HttpGet("{id}")]
         public async Task<ActionResult<Product>> GetProduct(int id)
         {
             var product = await _context.Products.FindAsync(id);
-
-            if (product == null)
-            {
-                return NotFound();
-            }
-
-            return product;
+            return product is null ? NotFound() : Ok(product);
         }
 
-        // POST: api/products
+        // POST /api/products
         [HttpPost]
-        public async Task<ActionResult<Product>> PostProduct(Product product)
+        public async Task<ActionResult<Product>> CreateProduct(Product product)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
 
+            product.UpdatedAt = DateTime.UtcNow;
             _context.Products.Add(product);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction(nameof(GetProduct), new { id = product.Id }, product);
         }
 
-        // PUT: api/products/5
+        // PUT /api/products/{id}
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProduct(int id, Product product)
+        public async Task<IActionResult> UpdateProduct(int id, Product product)
         {
             if (id != product.Id)
-            {
-                return BadRequest();
-            }
+                return BadRequest("ID mismatch.");
 
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
 
+            product.UpdatedAt = DateTime.UtcNow;
             _context.Entry(product).State = EntityState.Modified;
 
             try
             {
-                // Force UpdateAt to be the current time
-                product.UpdatedAt = DateTime.Now;
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ProductExists(id))
-                {
+                if (!await _context.Products.AnyAsync(p => p.Id == id))
                     return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                throw;
             }
 
             return NoContent();
         }
 
-        // DELETE: api/products/5
+        // DELETE /api/products/{id}
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProduct(int id)
         {
             var product = await _context.Products.FindAsync(id);
-            if (product == null)
-            {
+            if (product is null)
                 return NotFound();
-            }
 
             _context.Products.Remove(product);
             await _context.SaveChangesAsync();
 
             return NoContent();
-        }
-
-        private bool ProductExists(int id)
-        {
-            return _context.Products.Any(e => e.Id == id);
         }
     }
 }
