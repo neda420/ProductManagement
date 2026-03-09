@@ -15,7 +15,7 @@ A full-stack web application for managing a product catalog, built with **.NET 1
 | UI       | Bootstrap 5              |
 
 ---
-![Uploading image.png…]()
+
 
 ## Project Structure
 
