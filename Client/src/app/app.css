@@ -1,1 +1,15 @@
-/* Global app styles */
+:host {
+  display: block;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top right, rgba(13, 110, 253, 0.18), transparent 40%),
+    radial-gradient(circle at top left, rgba(111, 66, 193, 0.16), transparent 45%);
+}
+
+.app-navbar {
+  background: linear-gradient(90deg, #0d6efd 0%, #6610f2 100%);
+}
+
+.app-shell {
+  min-height: calc(100vh - 56px);
+}
