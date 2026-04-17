@@ -30,7 +30,7 @@
         <div class="col-md-4">
             <div class="card stat-card shadow-sm border-0">
                 <div class="card-body">
-                    <p class="text-muted mb-1">Low Stock (≤ 5)</p>
+                    <p class="text-muted mb-1">Low Stock (&lt;= {{ lowStockThreshold }})</p>
                     <h4 class="mb-0">{{ lowStockCount }}</h4>
                 </div>
             </div>
@@ -95,7 +95,13 @@
                     </tr>
                     } @empty {
                     <tr>
-                        <td colspan="7" class="text-center py-5 text-muted">No products match your current filters.</td>
+                        <td colspan="7" class="text-center py-5 text-muted">
+                            @if (products.length === 0) {
+                            No products found. Click "Add New Product" to get started.
+                            } @else {
+                            No products match your current filters.
+                            }
+                        </td>
                     </tr>
                     }
                 </tbody>

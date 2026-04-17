@@ -13,6 +13,7 @@ import { Product } from '../../models/product.model';
   styleUrl: './product-list.component.css'
 })
 export class ProductListComponent implements OnInit {
+  readonly lowStockThreshold = 5;
   products: Product[] = [];
   errorMessage = '';
   isDemoMode = false;
@@ -72,6 +73,8 @@ export class ProductListComponent implements OnInit {
   }
 
   get lowStockCount(): number {
-    return this.products.filter((item) => item.quantity > 0 && item.quantity <= 5).length;
+    return this.products.filter(
+      (item) => item.quantity > 0 && item.quantity <= this.lowStockThreshold
+    ).length;
   }
 }

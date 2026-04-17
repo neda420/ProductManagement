@@ -10,7 +10,7 @@ export class ProductService {
     private apiUrl = 'http://localhost:5286/api/products';
     private readonly localStorageKey = 'product-management-demo-products';
     private readonly isDemoMode =
-        typeof window !== 'undefined' && window.location.hostname.endsWith('github.io');
+        typeof window !== 'undefined' && window.location.hostname.endsWith('.github.io');
 
     constructor(private http: HttpClient) {
         if (this.isDemoMode) {
@@ -27,7 +27,7 @@ export class ProductService {
             return of(
                 this.readProducts().sort(
                     (a, b) =>
-                        new Date(b.updatedAt ?? 0).getTime() - new Date(a.updatedAt ?? 0).getTime()
+                        this.getUpdatedAtTimestamp(b.updatedAt) - this.getUpdatedAtTimestamp(a.updatedAt)
                 )
             );
         }
@@ -147,6 +147,15 @@ export class ProductService {
     }
 
     private getNextId(products: Product[]): number {
-        return products.reduce((max, product) => Math.max(max, product.id ?? 0), 0) + 1;
+        const numericIds = products
+            .map((product) => Number(product.id))
+            .filter((id) => Number.isFinite(id) && id > 0);
+
+        return (numericIds.length > 0 ? Math.max(...numericIds) : 0) + 1;
+    }
+
+    private getUpdatedAtTimestamp(updatedAt: Product['updatedAt']): number {
+        // Missing dates should be sorted to the end.
+        return updatedAt ? new Date(updatedAt).getTime() : Number.NEGATIVE_INFINITY;
     }
 }
