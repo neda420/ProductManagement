@@ -165,7 +165,7 @@ This repository includes a workflow at:
 
 ### Deploy
 
-- Push changes to the `main` branch, or run the workflow manually from the **Actions** tab.
+- Push changes to the `main` or `master` branch, or run the workflow manually from the **Actions** tab.
 - The workflow builds the Angular client and deploys it to GitHub Pages.
 - The workflow sets `--base-href` from the current repository name automatically.
 
