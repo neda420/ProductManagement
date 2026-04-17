@@ -129,6 +129,8 @@ The application will open at: **http://localhost:4200**
 - ➕ **Add Product** — Fill in a form to create a new product.
 - ✏️ **Edit Product** — Update any product's details using the same form.
 - 🗑️ **Delete Product** — Remove a product with a confirmation dialog.
+- 🔎 **Search and Filter** — Quickly find products by title/description and stock status.
+- 📊 **Dashboard Cards** — Instantly view total products, inventory value, and low-stock count.
 - ✅ **Validation**
   - Frontend: Title and Price fields are mandatory.
   - Backend: Price must be greater than 0.
@@ -147,3 +149,26 @@ CREATE TABLE Products (
     UpdatedAt   DATETIME DEFAULT GETDATE()
 );
 ```
+
+---
+
+## Deploy Frontend to GitHub Pages
+
+This repository includes a workflow at:
+
+`.github/workflows/deploy-client-pages.yml`
+
+### One-time setup
+
+1. In GitHub, open **Settings → Pages** for this repository.
+2. Set **Source** to **GitHub Actions**.
+
+### Deploy
+
+- Push changes to the `main` branch, or run the workflow manually from the **Actions** tab.
+- The workflow builds the Angular client and deploys it to GitHub Pages.
+
+### Important Note for Hosted Demo
+
+When running on `github.io`, the frontend automatically switches to **demo mode** and stores products in browser local storage.  
+This keeps the deployed site fully interactive without requiring a local .NET API.

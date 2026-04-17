@@ -1,7 +1,58 @@
 <div class="container mt-4">
+    @if (isDemoMode) {
+    <div class="alert alert-info border-0 shadow-sm demo-alert">
+        🌐 Running in GitHub Pages demo mode with browser-stored products.
+    </div>
+    }
+
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="mb-0">Products</h2>
         <a routerLink="/add" class="btn btn-primary">+ Add New Product</a>
+    </div>
+
+    <div class="row g-3 mb-4">
+        <div class="col-md-4">
+            <div class="card stat-card shadow-sm border-0">
+                <div class="card-body">
+                    <p class="text-muted mb-1">Total Products</p>
+                    <h4 class="mb-0">{{ totalProducts }}</h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card stat-card shadow-sm border-0">
+                <div class="card-body">
+                    <p class="text-muted mb-1">Inventory Value</p>
+                    <h4 class="mb-0">{{ inventoryValue | currency }}</h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card stat-card shadow-sm border-0">
+                <div class="card-body">
+                    <p class="text-muted mb-1">Low Stock (≤ 5)</p>
+                    <h4 class="mb-0">{{ lowStockCount }}</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body">
+            <div class="row g-3">
+                <div class="col-md-8">
+                    <input type="text" class="form-control" placeholder="Search by title or description..."
+                        [(ngModel)]="searchTerm" />
+                </div>
+                <div class="col-md-4">
+                    <select class="form-select" [(ngModel)]="stockFilter">
+                        <option value="all">All stock statuses</option>
+                        <option value="inStock">In stock only</option>
+                        <option value="outOfStock">Out of stock only</option>
+                    </select>
+                </div>
+            </div>
+        </div>
     </div>
 
     @if (errorMessage) {
@@ -23,7 +74,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @for (product of products; track product.id) {
+                    @for (product of filteredProducts; track product.id) {
                     <tr>
                         <td class="align-middle">{{ product.id }}</td>
                         <td class="align-middle"><strong>{{ product.title }}</strong></td>
@@ -44,8 +95,7 @@
                     </tr>
                     } @empty {
                     <tr>
-                        <td colspan="7" class="text-center py-5 text-muted">No products found. Click "Add New Product"
-                            to get started.</td>
+                        <td colspan="7" class="text-center py-5 text-muted">No products match your current filters.</td>
                     </tr>
                     }
                 </tbody>

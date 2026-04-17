@@ -1,9 +1,12 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+<nav class="navbar navbar-expand-lg navbar-dark app-navbar shadow-sm">
   <div class="container">
     <a class="navbar-brand fw-semibold" routerLink="/">
       📦 Product Catalog
     </a>
+    <a class="btn btn-outline-light btn-sm" routerLink="/add">+ Add Product</a>
   </div>
 </nav>
 
-<router-outlet />
+<main class="app-shell py-4">
+  <router-outlet />
+</main>

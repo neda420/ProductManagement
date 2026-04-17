@@ -1,0 +1,12 @@
+.stat-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.08) !important;
+}
+
+.demo-alert {
+  background: linear-gradient(90deg, rgba(13, 110, 253, 0.12), rgba(102, 16, 242, 0.12));
+}
